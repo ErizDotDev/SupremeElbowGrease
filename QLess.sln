@@ -13,6 +13,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QLess.Web", "src\QLess.Web\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QLess.Api", "src\QLess.Api\QLess.Api.csproj", "{B5DD2D37-D5AE-4713-8322-AEB99B54E5FA}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "database-scripts", "database-scripts", "{4FE1A4DF-EE0F-485B-996E-AA6070861F91}"
+	ProjectSection(SolutionItems) = preProject
+		01 Create Initial Database Objects.sql = 01 Create Initial Database Objects.sql
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QLess.UnitTests", "tests\QLess.UnitTests\QLess.UnitTests.csproj", "{A6068766-4AEC-4267-8AB2-F892C45E71BB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -31,6 +38,10 @@ Global
 		{B5DD2D37-D5AE-4713-8322-AEB99B54E5FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B5DD2D37-D5AE-4713-8322-AEB99B54E5FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B5DD2D37-D5AE-4713-8322-AEB99B54E5FA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A6068766-4AEC-4267-8AB2-F892C45E71BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A6068766-4AEC-4267-8AB2-F892C45E71BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A6068766-4AEC-4267-8AB2-F892C45E71BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A6068766-4AEC-4267-8AB2-F892C45E71BB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -39,6 +50,7 @@ Global
 		{C46D0978-81D1-4F04-96E5-D8F5431D1D1A} = {22A2C155-2A21-4A19-A163-E3FDE3D4FCEF}
 		{1DBC145D-5A4B-4FCB-83F4-F3D14953F492} = {22A2C155-2A21-4A19-A163-E3FDE3D4FCEF}
 		{B5DD2D37-D5AE-4713-8322-AEB99B54E5FA} = {22A2C155-2A21-4A19-A163-E3FDE3D4FCEF}
+		{A6068766-4AEC-4267-8AB2-F892C45E71BB} = {7AE5A39D-3130-4A79-A287-3F6111BA39A8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DB6224C8-7B6B-45D3-AA68-4A2F2BD1EAF9}
