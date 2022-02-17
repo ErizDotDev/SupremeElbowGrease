@@ -1,7 +1,7 @@
 ﻿namespace QLess.Core.Common
 {
-	public class BaseEntity<T>
+	public class BaseEntity
 	{
-		public T Id { get; set; }
+		public long Id { get; set; }
 	}
 }

@@ -2,7 +2,7 @@
 
 namespace QLess.Core.Domain
 {
-	public class Card : BaseEntity<long>
+	public class Card : BaseEntity
 	{
 		public int CardType { get; set; }
 
