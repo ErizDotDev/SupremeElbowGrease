@@ -5,6 +5,6 @@ namespace QLess.Core.Interface
 {
 	public interface ICardService
 	{
-		Task<CreateCardResponse> CreateCard(CardType cardType, decimal initialBalance);
+		Task<CreateCardResponse> CreateCard(CardType cardType, decimal initialBalance, string specialIdNumber = "");
 	}
 }
