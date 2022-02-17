@@ -21,6 +21,7 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\..\src\QLess.Core\QLess.Core.csproj" />
+		<ProjectReference Include="..\..\src\QLess.Infrastructure\QLess.Infrastructure.csproj" />
 	</ItemGroup>
 
 </Project>

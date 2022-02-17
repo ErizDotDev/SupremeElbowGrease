@@ -1,6 +1,6 @@
 using QLess.Core.Enums;
 using QLess.Core.Interface;
-using QLess.Core.Services;
+using QLess.Infrastructure.Services;
 using Xunit;
 
 namespace QLess.UnitTests

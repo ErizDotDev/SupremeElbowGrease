@@ -2,7 +2,7 @@
 using QLess.Core.Enums;
 using QLess.Core.Interface;
 
-namespace QLess.Core.Services
+namespace QLess.Infrastructure.Services
 {
 	public class CardService : ICardService
 	{

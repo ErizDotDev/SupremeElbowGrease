@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using QLess.Core.Interface;
 
-namespace QLess.Core.Services
+namespace QLess.Infrastructure.Services
 {
 	public static class CoreServiceRegistrationProvider
 	{
