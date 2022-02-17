@@ -1,7 +1,9 @@
 ﻿using QLess.Core.Common;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace QLess.Core.Domain
 {
+	[Table("CardDetail")]
 	public class Card : BaseEntity
 	{
 		public int CardType { get; set; }
