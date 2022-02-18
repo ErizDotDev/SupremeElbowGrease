@@ -10,18 +10,14 @@ namespace QLess.Infrastructure.Services
 	{
 		private readonly IRepository<Card> _cardRepository;
 		private readonly IRepository<Transaction> _transactionRepository;
+		private Dictionary<CardType, Func<BaseCardTransactionProcessor>> cardTransactionProcessorList;
 
 		public CardService(IRepository<Card> cardRepository, IRepository<Transaction> transactionRepository)
 		{
 			_cardRepository = cardRepository;
 			_transactionRepository = transactionRepository;
+			cardTransactionProcessorList = BaseCardTransactionProcessor.GetAvailableTransactionProcessors();
 		}
-
-		private Dictionary<CardType, Func<BaseCardTransactionProcessor>> cardTransactionProcessorList = new Dictionary<CardType, Func<BaseCardTransactionProcessor>>()
-		{
-			{ CardType.Regular, () => new RegularCardTransactionProcessor() },
-			{ CardType.Discounted, () => new DiscountedCardTransactionProcessor() }
-		};
 
 		public async Task<CreateCardResponse> CreateCard(CardType cardType, decimal initialBalance, string specialIdNumber = "")
 		{

@@ -31,6 +31,8 @@ namespace QLess.Infrastructure.Processors
 			return new CreateCardResponse { CardNumber = cardNumber };
 		}
 
+		public override decimal GetTripFare() => 10m;
+
 		private bool IsSpecialIdValid(string specialIdNumber)
 		{
 			return !string.IsNullOrEmpty(specialIdNumber)
