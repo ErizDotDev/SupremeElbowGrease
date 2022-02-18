@@ -35,6 +35,29 @@ namespace QLess.Infrastructure.Data
 			}
 		}
 
+		public bool Create(TEntity entity, out long id)
+		{
+			id = 0;
+
+			if (entity == null)
+			{
+				id = 0;
+				return false;
+			}
+
+			dbConnection.Open();
+
+			try
+			{
+				id = SqlMapperExtensions.Insert<TEntity>(dbConnection, entity);
+				return id > 0;
+			}
+			finally
+			{
+				dbConnection.Close();
+			}
+		}
+
 		public async Task<bool> DeleteAsync(long id)
 		{
 			dbConnection.Open();
