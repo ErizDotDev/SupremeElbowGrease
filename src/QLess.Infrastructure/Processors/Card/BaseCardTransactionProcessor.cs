@@ -5,6 +5,9 @@ namespace QLess.Infrastructure.Processors
 {
 	public abstract class BaseCardTransactionProcessor
 	{
+		internal const decimal maximumLoadTransactionAmount = 1000m;
+		internal const decimal maximumLoadAmount = 10000m;
+
 		public static Dictionary<CardType, Func<BaseCardTransactionProcessor>> GetAvailableTransactionProcessors()
 			=> new Dictionary<CardType, Func<BaseCardTransactionProcessor>>()
 			{
@@ -12,7 +15,7 @@ namespace QLess.Infrastructure.Processors
 				{ CardType.Discounted, () => new DiscountedCardTransactionProcessor() }
 			};
 
-		public virtual CreateCardResponse TryCreateCardNumber(decimal initialBalance, string specialIdNumber = "")
+		public virtual CreateCardResponse TryCreateCardNumber(decimal initialLoadAmount, string specialIdNumber = "")
 			=> new CreateCardResponse();
 
 		public virtual decimal GetTripFare(List<Transaction> currentDateTripTransactions) => 0m;

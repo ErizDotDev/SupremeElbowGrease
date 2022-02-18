@@ -4,16 +4,25 @@ namespace QLess.Infrastructure.Processors
 {
 	public class RegularCardTransactionProcessor : BaseCardTransactionProcessor
 	{
-		public override CreateCardResponse TryCreateCardNumber(decimal initialBalance, string specialIdNumber = "")
+		public override CreateCardResponse TryCreateCardNumber(decimal initialLoadAmount, string specialIdNumber = "")
 		{
-			const int minimumRegularCardTypeLoad = 100;
+			const decimal minimumRegularCardTypeLoad = 100;
 
-			if (initialBalance < minimumRegularCardTypeLoad)
+			if (initialLoadAmount < minimumRegularCardTypeLoad)
 			{
 				return new CreateCardResponse
 				{
 					CardNumber = string.Empty,
 					ErrorMessage = $"Minimum initial load balance not reached. Please load your card with at least P{minimumRegularCardTypeLoad}.00"
+				};
+			}
+
+			if (initialLoadAmount > maximumLoadTransactionAmount)
+			{
+				return new CreateCardResponse
+				{
+					CardNumber = string.Empty,
+					ErrorMessage = $"Exceeded max load amount per transaction P{maximumLoadTransactionAmount}.00."
 				};
 			}
 
