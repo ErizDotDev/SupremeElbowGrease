@@ -4,7 +4,7 @@ namespace QLess.Infrastructure.Processors
 {
 	public class DiscountedCardTransactionProcessor : BaseCardTransactionProcessor
 	{
-		public override CreateCardResponse CreateCardDetails(decimal initialBalance, string specialIdNumber = "")
+		public override CreateCardResponse TryCreateCardNumber(decimal initialBalance, string specialIdNumber = "")
 		{
 			const int minimumDiscountedCardTypeLoad = 500;
 
