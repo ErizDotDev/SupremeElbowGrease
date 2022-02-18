@@ -52,16 +52,16 @@ namespace QLess.Infrastructure.Services
 				return new CreateCardResponse
 				{
 					CardNumber = string.Empty,
-					ErrorMessage = "Failed to create card. Please try again."
+					ErrorMessage = "Failed to save transaction. Please try again."
 				};
 			}
 
 			return processResponse;
 		}
 
-		public async Task<bool> SaveNewCardBalance(Card cardDetail, decimal fare)
+		public async Task<bool> SaveNewCardBalance(Card cardDetail, decimal newCardBalance)
 		{
-			cardDetail.Balance = cardDetail.Balance - fare;
+			cardDetail.Balance = newCardBalance;
 			return await _cardRepository.UpdateAsync(cardDetail);
 		}
 
