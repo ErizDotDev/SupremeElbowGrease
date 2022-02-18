@@ -1,8 +1,8 @@
-﻿CREATE DATABASE [qless]
-GO
+﻿--CREATE DATABASE [qless]
+--GO
 
-USE [qless]
-GO
+--USE [qless]
+--GO
 
 CREATE TABLE [CardType]
 (
