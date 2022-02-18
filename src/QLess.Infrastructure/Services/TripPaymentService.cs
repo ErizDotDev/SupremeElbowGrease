@@ -54,7 +54,7 @@ namespace QLess.Infrastructure.Services
 				};
 			}
 
-			bool isSavePaymentSuccess = await SavePaymentTransaction(cardDetail, tripFare);
+			bool isSavePaymentSuccess = await SaveTripPaymentTransaction(cardDetail, tripFare);
 			if (!isSavePaymentSuccess)
 			{
 				return new ServiceResponse
@@ -67,7 +67,7 @@ namespace QLess.Infrastructure.Services
 			return new ServiceResponse { Succeeded = true };
 		}
 
-		private async Task<bool> SavePaymentTransaction(Card cardDetail, decimal fare)
+		private async Task<bool> SaveTripPaymentTransaction(Card cardDetail, decimal fare)
 		{
 			bool result = true;
 			decimal newBalance = cardDetail.Balance - fare;
