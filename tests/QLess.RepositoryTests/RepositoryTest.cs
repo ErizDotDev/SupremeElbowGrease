@@ -33,7 +33,7 @@ namespace QLess.RepositoryTests
 			ResetDatabase();
 
 			var input = new Card
-			{ 
+			{
 				CardTypeId = (int)CardType.Regular,
 				CardNumber = "221802083101",
 				Balance = 100m,
@@ -57,6 +57,36 @@ namespace QLess.RepositoryTests
 		}
 
 		[Fact]
+		public void Create_ReturnsTrueAndCorrectId_GivenCreatedVersions()
+		{
+			ResetDatabase();
+
+			long id = 0;
+
+			var input = new Card
+			{
+				CardTypeId = (int)CardType.Regular,
+				CardNumber = "221802085302",
+				Balance = 100m,
+			};
+
+			_cardDetailRepository.Create(input, out id);
+
+			var input2 = new Card
+			{
+				CardTypeId = (int)CardType.Discounted,
+				CardNumber = "221802085302",
+				SpecialIdNumber = "XXXXXXXXXX",
+				Balance = 500m,
+			};
+
+			var result = _cardDetailRepository.Create(input2, out id);
+
+			Assert.True(result);
+			Assert.True(id == 4);
+		}
+
+		[Fact]
 		public async Task FindByIdAsync_ReturnsCorrectObject_WithValidId()
 		{
 			ResetDatabase();
@@ -69,7 +99,7 @@ namespace QLess.RepositoryTests
 			};
 
 			await _cardDetailRepository.CreateAsync(input);
-			
+
 			var fetchObjectResult = await _cardDetailRepository.FindByIdAsync(1);
 
 			Assert.NotNull(fetchObjectResult);
@@ -81,7 +111,7 @@ namespace QLess.RepositoryTests
 		[Fact]
 		public async Task FindByIdAsync_ReturnsNullOrEmptyObject_WithInvalidId()
 		{
-			ResetDatabase();			
+			ResetDatabase();
 
 			var input = new Card
 			{
@@ -91,7 +121,7 @@ namespace QLess.RepositoryTests
 			};
 
 			await _cardDetailRepository.CreateAsync(input);
-			
+
 			var fetchObjectResult = await _cardDetailRepository.FindByIdAsync(2);
 
 			Assert.Null(fetchObjectResult);
