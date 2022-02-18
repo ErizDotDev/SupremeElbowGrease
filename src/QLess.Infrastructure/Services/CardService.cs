@@ -8,11 +8,11 @@ namespace QLess.Infrastructure.Services
 {
 	public class CardService : ICardService
 	{
-		private readonly IRepository<Card> _cardRepository;
+		private readonly ICardRepository _cardRepository;
 		private readonly IRepository<Transaction> _transactionRepository;
 		private Dictionary<CardType, Func<BaseCardTransactionProcessor>> cardTransactionProcessorList;
 
-		public CardService(IRepository<Card> cardRepository, IRepository<Transaction> transactionRepository)
+		public CardService(ICardRepository cardRepository, IRepository<Transaction> transactionRepository)
 		{
 			_cardRepository = cardRepository;
 			_transactionRepository = transactionRepository;
@@ -47,7 +47,7 @@ namespace QLess.Infrastructure.Services
 			return processResponse;
 		}
 
-		private async Task<bool> CreateCardRecord(Card cardDetail)
+		public async Task<bool> CreateCardRecord(Card cardDetail)
 		{
 			bool result = true;
 			long cardId = 0;
@@ -59,6 +59,15 @@ namespace QLess.Infrastructure.Services
 
 			return result;
 		}
+
+		public async Task<bool> SaveNewCardBalance(Card cardDetail, decimal newCardBalance)
+		{
+			cardDetail.Balance = newCardBalance;
+			return await _cardRepository.UpdateAsync(cardDetail);
+		}
+
+		public async Task<Card> FindCardDetailsByCardNumber(string cardNumber)
+			=> await Task.FromResult(_cardRepository.FindByCardNumber(cardNumber));
 
 		private async Task<bool> SaveCreateCardTransaction(Card cardDetail)
 		{

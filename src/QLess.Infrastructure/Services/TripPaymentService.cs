@@ -9,20 +9,20 @@ namespace QLess.Infrastructure.Services
 {
 	public class TripPaymentService : ITripPaymentService
 	{
-		private ICardRepository _cardRepository;
+		private ICardService _cardService;
 		private readonly IRepository<Transaction> _transactionRepository;
 		private Dictionary<CardType, Func<BaseCardTransactionProcessor>> cardTransactionProcessorList;
 
-		public TripPaymentService(ICardRepository cardRepository, IRepository<Transaction> transactionRepository)
+		public TripPaymentService(ICardService cardService, IRepository<Transaction> transactionRepository)
 		{
-			_cardRepository = cardRepository;
+			_cardService = cardService;
 			_transactionRepository = transactionRepository;
 			cardTransactionProcessorList = BaseCardTransactionProcessor.GetAvailableTransactionProcessors();
 		}
 
 		public async Task<ServiceResponse> PayForTrip(string cardNumber)
 		{
-			var cardDetail = _cardRepository.FindByCardNumber(cardNumber);
+			var cardDetail = await _cardService.FindCardDetailsByCardNumber(cardNumber);
 
 			if (cardDetail == null)
 			{
@@ -83,15 +83,9 @@ namespace QLess.Infrastructure.Services
 			};
 
 			result = result && await _transactionRepository.CreateAsync(paymentTransaction);
-			result = result && await SaveNewCardBalance(cardDetail, newBalance);
+			result = result && await _cardService.SaveNewCardBalance(cardDetail, newBalance);
 
 			return result;
-		}
-
-		private async Task<bool> SaveNewCardBalance(Card cardDetail, decimal newCardBalance)
-		{
-			cardDetail.Balance = newCardBalance;
-			return await _cardRepository.UpdateAsync(cardDetail);
-		}
+		}		
 	}
 }
