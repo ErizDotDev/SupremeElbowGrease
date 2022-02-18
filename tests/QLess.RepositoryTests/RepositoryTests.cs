@@ -10,12 +10,12 @@ using Xunit;
 
 namespace QLess.RepositoryTests
 {
-	public class RepositoryTest
+	public class RepositoryTests
 	{
 		private readonly IRepository<Card> _cardDetailRepository;
 		private readonly Migrations _scriptRunner;
 
-		public RepositoryTest()
+		public RepositoryTests()
 		{
 			var config = new ConfigurationBuilder()
 				.AddJsonFile("appsettings.json")
@@ -83,7 +83,7 @@ namespace QLess.RepositoryTests
 			var result = _cardDetailRepository.Create(input2, out id);
 
 			Assert.True(result);
-			Assert.True(id == 4);
+			Assert.True(id == 2);
 		}
 
 		[Fact]
