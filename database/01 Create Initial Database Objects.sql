@@ -36,7 +36,7 @@ INSERT INTO [TransactionType] VALUES(3, 'Reload Card')
 CREATE TABLE [Transaction]
 (
 	[Id] BIGINT PRIMARY KEY IdENTITY,
-	[CardId] BIGINT FOREIGN KEY REFERENCES [cards]([Id]),
+	[CardId] BIGINT FOREIGN KEY REFERENCES [CardDetail]([Id]),
 	[TransactionDate] DATETIME NOT NULL,
 	[TransactionTypeId] INT FOREIGN KEY REFERENCES [TransactionType]([Id]),
 	[TransactionAmount] DECIMAL NOT NULL,
