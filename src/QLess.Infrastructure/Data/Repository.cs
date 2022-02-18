@@ -19,12 +19,15 @@ namespace QLess.Infrastructure.Data
 
 		public async Task<bool> CreateAsync(TEntity entity)
 		{
+			if (entity == null)
+				return false;
+
 			dbConnection.Open();
 
 			try
 			{
 				var inserted = await dbConnection.InsertAsync<TEntity>(entity);
-				return inserted == 0;
+				return inserted > 0;
 			}
 			finally
 			{
@@ -82,6 +85,9 @@ namespace QLess.Infrastructure.Data
 
 		public async Task<bool> UpdateAsync(TEntity entity)
 		{
+			if (entity == null)
+				return false;
+
 			dbConnection.Open();
 
 			try
