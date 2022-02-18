@@ -9,13 +9,13 @@ namespace QLess.Infrastructure.Services
 	public class CardService : ICardService
 	{
 		private readonly ICardRepository _cardRepository;
-		private readonly IRepository<Transaction> _transactionRepository;
+		private readonly ITransactionService _transactionService;
 		private Dictionary<CardType, Func<BaseCardTransactionProcessor>> cardTransactionProcessorList;
 
-		public CardService(ICardRepository cardRepository, IRepository<Transaction> transactionRepository)
+		public CardService(ICardRepository cardRepository, ITransactionService transactionService)
 		{
 			_cardRepository = cardRepository;
-			_transactionRepository = transactionRepository;
+			_transactionService = transactionService;
 			cardTransactionProcessorList = BaseCardTransactionProcessor.GetAvailableTransactionProcessors();
 		}
 
@@ -55,33 +55,18 @@ namespace QLess.Infrastructure.Services
 			result = result && _cardRepository.Create(cardDetail, out cardId);
 			
 			cardDetail.Id = cardId;
-			result = result && await SaveCreateCardTransaction(cardDetail);
+			result = result && await _transactionService.SaveCreateCardTransaction(cardDetail);
 
 			return result;
 		}
 
-		public async Task<bool> SaveNewCardBalance(Card cardDetail, decimal newCardBalance)
+		public async Task<bool> SaveNewCardBalance(Card cardDetail, decimal fare)
 		{
-			cardDetail.Balance = newCardBalance;
+			cardDetail.Balance = cardDetail.Balance - fare;
 			return await _cardRepository.UpdateAsync(cardDetail);
 		}
 
 		public async Task<Card> FindCardDetailsByCardNumber(string cardNumber)
 			=> await Task.FromResult(_cardRepository.FindByCardNumber(cardNumber));
-
-		private async Task<bool> SaveCreateCardTransaction(Card cardDetail)
-		{
-			var newTransaction = new Transaction
-			{ 
-				CardId = cardDetail.Id,
-				TransactionDate = DateTime.Now,
-				TransactionTypeId = TransactionType.InitialLoad.Id,
-				TransactionAmount = cardDetail.Balance,
-				PreviousBalance = 0,
-				NewBalance = cardDetail.Balance
-			};
-
-			return await _transactionRepository.CreateAsync(newTransaction);
-		}
 	}
 }

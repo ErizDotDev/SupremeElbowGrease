@@ -7,7 +7,7 @@ namespace QLess.Core.Interface
 	{
 		Task<CreateCardResponse> CreateCard(CardType cardType, decimal initialBalance, string specialIdNumber = "");
 		Task<bool> CreateCardRecord(Card cardDetail);
-		Task<bool> SaveNewCardBalance(Card cardDetail, decimal newCardBalance);
+		Task<bool> SaveNewCardBalance(Card cardDetail, decimal fare);
 		Task<Card> FindCardDetailsByCardNumber(string cardNumber);
 	}
 }

@@ -9,14 +9,14 @@ namespace QLess.Infrastructure.Services
 {
 	public class TripPaymentService : ITripPaymentService
 	{
-		private ICardService _cardService;
-		private readonly IRepository<Transaction> _transactionRepository;
+		private readonly ICardService _cardService;
+		private readonly ITransactionService _transactionService;
 		private Dictionary<CardType, Func<BaseCardTransactionProcessor>> cardTransactionProcessorList;
 
-		public TripPaymentService(ICardService cardService, IRepository<Transaction> transactionRepository)
+		public TripPaymentService(ICardService cardService, ITransactionService transactionService)
 		{
 			_cardService = cardService;
-			_transactionRepository = transactionRepository;
+			_transactionService = transactionService;
 			cardTransactionProcessorList = BaseCardTransactionProcessor.GetAvailableTransactionProcessors();
 		}
 
@@ -54,8 +54,10 @@ namespace QLess.Infrastructure.Services
 				};
 			}
 
-			bool isSavePaymentSuccess = await SaveTripPaymentTransaction(cardDetail, tripFare);
-			if (!isSavePaymentSuccess)
+			bool isSavePaymentTransactionSuccess = await _transactionService.SaveTripPaymentTransaction(cardDetail, tripFare);
+			bool isSaveCardBalanceSuccess = await _cardService.SaveNewCardBalance(cardDetail, tripFare);
+
+			if (!(isSavePaymentTransactionSuccess && isSaveCardBalanceSuccess))
 			{
 				return new ServiceResponse
 				{
@@ -65,27 +67,6 @@ namespace QLess.Infrastructure.Services
 			}
 
 			return new ServiceResponse { Succeeded = true };
-		}
-
-		private async Task<bool> SaveTripPaymentTransaction(Card cardDetail, decimal fare)
-		{
-			bool result = true;
-			decimal newBalance = cardDetail.Balance - fare;
-
-			var paymentTransaction = new Transaction
-			{
-				CardId = cardDetail.Id,
-				TransactionDate = DateTime.Now,
-				TransactionTypeId = TransactionType.PayTrip.Id,
-				TransactionAmount = fare,
-				PreviousBalance = cardDetail.Balance,
-				NewBalance = newBalance
-			};
-
-			result = result && await _transactionRepository.CreateAsync(paymentTransaction);
-			result = result && await _cardService.SaveNewCardBalance(cardDetail, newBalance);
-
-			return result;
 		}		
 	}
 }
