@@ -9,7 +9,7 @@ namespace QLess.Infrastructure.Data
 	public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
 	{
 		private readonly string _connectionString;
-		private IDbConnection dbConnection;
+		internal IDbConnection dbConnection;
 
 		public Repository(IConfiguration configuration)
 		{
