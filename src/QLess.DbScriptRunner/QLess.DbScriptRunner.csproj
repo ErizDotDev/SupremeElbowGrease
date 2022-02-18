@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Scripts\Reset00 Reset Database.sql" />
+    <None Remove="Scripts\Script01 Create Initial Database Objects.sql" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Scripts\Reset00 Reset Database.sql" />
+    <EmbeddedResource Include="Scripts\Script01 Create Initial Database Objects.sql" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="dbup" Version="4.5.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="6.0.0" />
+  </ItemGroup>
+
+</Project>
