@@ -34,8 +34,20 @@ namespace QLess.Infrastructure.Services
 				Balance = initialBalance
 			};
 
-			bool isCreateSuccess = await CreateCardRecord(cardDetail);
-			if (!isCreateSuccess)
+			long cardId = 0;
+			bool isCreateCardSuccess = _cardRepository.Create(cardDetail, out cardId);
+			if (!isCreateCardSuccess)
+			{
+				return new CreateCardResponse
+				{
+					CardNumber = string.Empty,
+					ErrorMessage = "Failed to create card. Please try again."
+				};
+			}
+
+			cardDetail.Id = cardId;
+			bool isSaveCreateCardTransactionSuccess = await _transactionService.SaveCreateCardTransaction(cardDetail);
+			if (!isSaveCreateCardTransactionSuccess)
 			{
 				return new CreateCardResponse
 				{
@@ -45,19 +57,6 @@ namespace QLess.Infrastructure.Services
 			}
 
 			return processResponse;
-		}
-
-		public async Task<bool> CreateCardRecord(Card cardDetail)
-		{
-			bool result = true;
-			long cardId = 0;
-
-			result = result && _cardRepository.Create(cardDetail, out cardId);
-			
-			cardDetail.Id = cardId;
-			result = result && await _transactionService.SaveCreateCardTransaction(cardDetail);
-
-			return result;
 		}
 
 		public async Task<bool> SaveNewCardBalance(Card cardDetail, decimal fare)
