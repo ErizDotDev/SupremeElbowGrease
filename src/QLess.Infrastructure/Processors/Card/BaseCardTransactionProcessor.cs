@@ -15,7 +15,7 @@ namespace QLess.Infrastructure.Processors
 		public virtual CreateCardResponse TryCreateCardNumber(decimal initialBalance, string specialIdNumber = "")
 			=> new CreateCardResponse();
 
-		public virtual decimal GetTripFare() => 0m;
+		public virtual decimal GetTripFare(List<Transaction> currentDateTripTransactions) => 0m;
 
 		internal string GenerateCardNumber()
 			=> DateTime.Now.ToString("yyddMMhhmmss");

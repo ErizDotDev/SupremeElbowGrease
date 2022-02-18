@@ -6,12 +6,15 @@ namespace QLess.Infrastructure.Services
 {
 	public class TransactionService : ITransactionService
 	{
-		private readonly IRepository<Transaction> _transactionRepository;
+		private readonly ITransactionRepository _transactionRepository;
 
-		public TransactionService(IRepository<Transaction> transactionRepository)
+		public TransactionService(ITransactionRepository transactionRepository)
 		{
 			_transactionRepository = transactionRepository;
 		}
+
+		public async Task<List<Transaction>> GetTripTransactionsFromGivenDate(DateTime givenDate)
+			=> await Task.FromResult(_transactionRepository.GetTripTransactionsForGivenDate(givenDate));
 
 		public async Task<bool> SaveCreateCardTransaction(Card cardDetail)
 		{

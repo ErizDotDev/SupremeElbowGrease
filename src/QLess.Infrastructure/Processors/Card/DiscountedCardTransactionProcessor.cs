@@ -31,7 +31,20 @@ namespace QLess.Infrastructure.Processors
 			return new CreateCardResponse { CardNumber = cardNumber };
 		}
 
-		public override decimal GetTripFare() => 10m;
+		public override decimal GetTripFare(List<Transaction> currentDateTripTransactions)
+		{
+			const decimal baseTripFare = 10m;
+			const decimal baseDiscount = 0.2m;
+			const decimal additionalDiscount = 0.03m;
+
+			if (currentDateTripTransactions == null || currentDateTripTransactions.Count < 1)
+				return baseTripFare - (baseTripFare * baseDiscount);
+
+			if (currentDateTripTransactions.Count == 1 || currentDateTripTransactions.Count < 5)
+				return baseTripFare - (baseTripFare * baseDiscount);
+
+			return baseTripFare - (baseTripFare * (baseDiscount + additionalDiscount));
+		}
 
 		private bool IsSpecialIdValid(string specialIdNumber)
 		{

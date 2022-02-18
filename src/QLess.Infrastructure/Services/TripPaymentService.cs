@@ -1,6 +1,4 @@
-﻿using QLess.Core.Data;
-using QLess.Core.Domain;
-using QLess.Core.Enums;
+﻿using QLess.Core.Enums;
 using QLess.Core.Interface;
 using QLess.Core.Services;
 using QLess.Infrastructure.Processors;
@@ -40,12 +38,15 @@ namespace QLess.Infrastructure.Services
 					Succeeded = false,
 					ErrorMessage = "Insufficient load balance. Please reload your card."
 				};
-			}
+			}			
 
 			var cardTransactionProcessor = cardTransactionProcessorList[(CardType)cardDetail.CardTypeId];
-			decimal tripFare = cardTransactionProcessor.Invoke().GetTripFare();
 
-			if (cardDetail.Balance - tripFare <= 0)
+			var currentDateTripTransactions = await _transactionService.GetTripTransactionsFromGivenDate(DateTime.Now);
+			decimal tripFare = cardTransactionProcessor.Invoke().GetTripFare(currentDateTripTransactions);
+			decimal newCardBalance = cardDetail.Balance - tripFare;
+
+			if (newCardBalance <= 0)
 			{
 				return new ServiceResponse
 				{
@@ -54,19 +55,27 @@ namespace QLess.Infrastructure.Services
 				};
 			}
 
-			bool isSavePaymentTransactionSuccess = await _transactionService.SaveTripPaymentTransaction(cardDetail, tripFare);
-			bool isSaveCardBalanceSuccess = await _cardService.SaveNewCardBalance(cardDetail, tripFare);
-
-			if (!(isSavePaymentTransactionSuccess && isSaveCardBalanceSuccess))
+			bool isSaveCardBalanceSuccess = await _cardService.SaveNewCardBalance(cardDetail, newCardBalance);
+			if (!isSaveCardBalanceSuccess)
 			{
 				return new ServiceResponse
 				{
 					Succeeded = false,
-					ErrorMessage = "Failed to save payment transaction. Please try again."
+					ErrorMessage = "Failed to save new card balance. Please try again."
 				};
 			}
 
+			bool isSavePaymentTransactionSuccess = await _transactionService.SaveTripPaymentTransaction(cardDetail, tripFare);
+			if (!isSavePaymentTransactionSuccess)
+			{
+				return new ServiceResponse
+				{
+					Succeeded = false,
+					ErrorMessage = "Failed to save payment transaction."
+				};
+			}			
+
 			return new ServiceResponse { Succeeded = true };
-		}		
+		}
 	}
 }

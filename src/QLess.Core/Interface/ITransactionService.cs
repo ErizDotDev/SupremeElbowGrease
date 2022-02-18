@@ -6,5 +6,6 @@ namespace QLess.Core.Interface
 	{
 		Task<bool> SaveCreateCardTransaction(Card cardDetail);
 		Task<bool> SaveTripPaymentTransaction(Card cardDetail, decimal fare);
+		Task<List<Transaction>> GetTripTransactionsFromGivenDate(DateTime givenDate);
 	}
 }

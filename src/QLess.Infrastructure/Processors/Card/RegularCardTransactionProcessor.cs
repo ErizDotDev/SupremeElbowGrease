@@ -22,6 +22,6 @@ namespace QLess.Infrastructure.Processors
 			return new CreateCardResponse { CardNumber = cardNumber };
 		}
 
-		public override decimal GetTripFare() => 15m;
+		public override decimal GetTripFare(List<Transaction> currentDateTripTransactions) => 15m;
 	}
 }
