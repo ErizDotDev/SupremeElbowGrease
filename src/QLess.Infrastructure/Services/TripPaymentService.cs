@@ -83,12 +83,12 @@ namespace QLess.Infrastructure.Services
 			};
 
 			result = result && await _transactionRepository.CreateAsync(paymentTransaction);
-			result = result && await SaveNewBalanceInCard(cardDetail, newBalance);
+			result = result && await SaveNewCardBalance(cardDetail, newBalance);
 
 			return result;
 		}
 
-		private async Task<bool> SaveNewBalanceInCard(Card cardDetail, decimal newCardBalance)
+		private async Task<bool> SaveNewCardBalance(Card cardDetail, decimal newCardBalance)
 		{
 			cardDetail.Balance = newCardBalance;
 			return await _cardRepository.UpdateAsync(cardDetail);
