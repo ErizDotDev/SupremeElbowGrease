@@ -6,7 +6,7 @@ namespace QLess.Core.Domain
 	[Table("CardDetail")]
 	public class Card : BaseEntity
 	{
-		public int CardType { get; set; }
+		public int CardTypeId { get; set; }
 
 		public string CardNumber { get; set; }
 
