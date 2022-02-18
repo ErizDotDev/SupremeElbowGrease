@@ -10,27 +10,7 @@ namespace QLess.Infrastructure.Data
 		public CardRepository(IConfiguration configuration)
 			: base(configuration)
 		{
-		}
-
-		public bool CreateCard(Card entity, out long id)
-		{
-			return CreateCard(entity, out id);
-		}
-
-		public async Task<bool> CreateCardAsync(Card entity)
-		{
-			return await CreateCardAsync(entity);
-		}
-
-		public async Task<bool> DeleteCardAsync(long id)
-		{
-			return await DeleteCardAsync(id);
-		}
-
-		public async Task<IQueryable<Card>> FindAllCardsAsync()
-		{
-			return await FindAllAsync();
-		}
+		}		
 
 		public Card FindByCardNumber(string cardNumber)
 		{
@@ -55,16 +35,6 @@ namespace QLess.Infrastructure.Data
 			{
 				dbConnection.Close();
 			}
-		}
-
-		public async Task<Card> FindCardByIdAsync(long id)
-		{
-			return await FindCardByIdAsync(id);
-		}
-
-		public async Task<bool> UpdateCardAsync(Card entity)
-		{
-			return await UpdateAsync(entity);
 		}
 	}
 }
