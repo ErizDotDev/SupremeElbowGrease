@@ -42,7 +42,7 @@ namespace QLess.Infrastructure.Services
 
 			var cardTransactionProcessor = cardTransactionProcessorList[(CardType)cardDetail.CardTypeId];
 
-			var currentDateTripTransactions = await _transactionService.GetTripTransactionsFromGivenDate(DateTime.Now);
+			var currentDateTripTransactions = await _transactionService.GetTripTransactionsFromGivenDate(cardDetail.Id, DateTime.Now);
 			decimal tripFare = cardTransactionProcessor.Invoke().GetTripFare(currentDateTripTransactions);
 			decimal newCardBalance = cardDetail.Balance - tripFare;
 
