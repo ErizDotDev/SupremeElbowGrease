@@ -27,10 +27,10 @@ INSERT INTO [TransactionType] VALUES(1, 'Initial Load')
 INSERT INTO [TransactionType] VALUES(2, 'Pay Trip')
 INSERT INTO [TransactionType] VALUES(3, 'Reload Card')
 
-CREATE TABLE [Transaction]
+CREATE TABLE [CardTransaction]
 (
 	[Id] BIGINT PRIMARY KEY IDENTITY,
-	[CardId] BIGINT FOREIGN KEY REFERENCES [Card]([Id]),
+	[CardId] BIGINT FOREIGN KEY REFERENCES [CardDetail]([Id]),
 	[TransactionDate] DATETIME NOT NULL,
 	[TransactionTypeId] INT FOREIGN KEY REFERENCES [TransactionType]([Id]),
 	[TransactionAmount] DECIMAL NOT NULL,

@@ -33,7 +33,7 @@ INSERT INTO [TransactionType] VALUES(1, 'Initial Load')
 INSERT INTO [TransactionType] VALUES(2, 'Pay Trip')
 INSERT INTO [TransactionType] VALUES(3, 'Reload Card')
 
-CREATE TABLE [Transaction]
+CREATE TABLE [CardTransaction]
 (
 	[Id] BIGINT PRIMARY KEY IdENTITY,
 	[CardId] BIGINT FOREIGN KEY REFERENCES [CardDetail]([Id]),
