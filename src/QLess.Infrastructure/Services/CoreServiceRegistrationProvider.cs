@@ -8,6 +8,7 @@ namespace QLess.Infrastructure.Services
 		public static void AddCoreServices(this IServiceCollection services)
 		{
 			services.AddScoped<ICardService, CardService>();
+			services.AddScoped<ITransactionService, TransactionService>();
 			services.AddScoped<ITripPaymentService, TripPaymentService>();
 			services.AddScoped<ICardLoadService, CardLoadService>();
 		}

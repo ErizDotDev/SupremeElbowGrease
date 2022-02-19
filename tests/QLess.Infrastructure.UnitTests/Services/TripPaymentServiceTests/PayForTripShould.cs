@@ -167,8 +167,6 @@ namespace QLess.Infrastructure.UnitTests.Services.TripPaymentServiceTests
 				new Transaction { CardId = 1, Id = 2, TransactionDate = DateTime.Now, TransactionTypeId = TransactionType.PayTrip.Id, TransactionAmount = 8m, PreviousBalance = 500m, NewBalance = 492m }
 			};
 
-			string expectedMessage = "Failed to save payment transaction.";
-
 			_cardService.FindCardDetailsByCardNumber(cardNumber).Returns<Card>(fakeCardDetail);
 			_transactionService.GetTripTransactionsFromGivenDate(Arg.Any<long>(), DateTime.Now).ReturnsForAnyArgs(fakeRetrievedTransactions);
 			_cardService.SaveNewCardBalance(fakeCardDetail, Arg.Any<decimal>()).ReturnsForAnyArgs(true);
