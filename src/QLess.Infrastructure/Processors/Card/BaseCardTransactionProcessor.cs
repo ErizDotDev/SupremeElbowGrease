@@ -5,8 +5,7 @@ namespace QLess.Infrastructure.Processors
 {
 	public abstract class BaseCardTransactionProcessor
 	{
-		internal const decimal maximumLoadTransactionAmount = 1000m;
-		internal const decimal maximumLoadAmount = 10000m;
+		internal const decimal MaximumLoadTransactionAmount = 1000m;		
 
 		public static Dictionary<CardType, Func<BaseCardTransactionProcessor>> GetAvailableTransactionProcessors()
 			=> new Dictionary<CardType, Func<BaseCardTransactionProcessor>>()

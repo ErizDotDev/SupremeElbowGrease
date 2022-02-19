@@ -17,12 +17,12 @@ namespace QLess.Infrastructure.Processors
 				};
 			}
 
-			if (initialLoadAmount > maximumLoadTransactionAmount)
+			if (initialLoadAmount > MaximumLoadTransactionAmount)
 			{
 				return new CreateCardResponse
 				{
 					CardNumber = string.Empty,
-					ErrorMessage = $"Exceeded max load amount per transaction P{maximumLoadTransactionAmount}.00."
+					ErrorMessage = $"Exceeded max load amount per transaction P{MaximumLoadTransactionAmount}.00."
 				};
 			}
 
