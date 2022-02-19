@@ -46,10 +46,8 @@ namespace QLess.Infrastructure.Processors
 			const decimal baseDiscount = 0.2m;
 			const decimal additionalDiscount = 0.03m;
 
-			if (currentDateTripTransactions == null || currentDateTripTransactions.Count < 1)
-				return baseTripFare - (baseTripFare * baseDiscount);
-
-			if (currentDateTripTransactions.Count == 1 || currentDateTripTransactions.Count < 5)
+			if (currentDateTripTransactions == null || currentDateTripTransactions.Count < 1
+				|| currentDateTripTransactions.Count >= 5)
 				return baseTripFare - (baseTripFare * baseDiscount);
 
 			return baseTripFare - (baseTripFare * (baseDiscount + additionalDiscount));
