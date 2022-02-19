@@ -14,8 +14,8 @@
 
 		public static TransactionType InitialLoad => new TransactionType(1, "Initial Load");
 
-		public static TransactionType PayTrip => new TransactionType(1, "Pay Trip");
+		public static TransactionType PayTrip => new TransactionType(2, "Pay Trip");
 
-		public static TransactionType ReloadCard => new TransactionType(1, "Reload Card");
+		public static TransactionType ReloadCard => new TransactionType(3, "Reload Card");
 	}
 }
