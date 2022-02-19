@@ -57,15 +57,6 @@ namespace QLess.Infrastructure.Services
 				};
 			}
 
-			if (cardDetail.Balance <= 0)
-			{
-				return new CardLoadResponse
-				{
-					Succeeded = false,
-					Message = "Insufficient load balance. Please reload your card."
-				};
-			}
-
 			if (cardDetail.Balance >= MaximumLoadAmount)
 			{
 				return new CardLoadResponse
