@@ -9,6 +9,7 @@ namespace QLess.Infrastructure.Services
 		{
 			services.AddScoped<ICardService, CardService>();
 			services.AddScoped<ITripPaymentService, TripPaymentService>();
+			services.AddScoped<ICardLoadService, CardLoadService>();
 		}
 	}
 }

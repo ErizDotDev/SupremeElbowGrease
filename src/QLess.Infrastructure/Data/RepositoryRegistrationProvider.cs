@@ -9,6 +9,7 @@ namespace QLess.Infrastructure.Data
 		{
 			services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 			services.AddScoped<ICardRepository, CardRepository>();
+			services.AddScoped<ITransactionRepository, TransactionRepository>();
 		}
 	}
 }
