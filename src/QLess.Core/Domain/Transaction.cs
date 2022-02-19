@@ -1,7 +1,9 @@
 ﻿using QLess.Core.Common;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace QLess.Core.Domain
 {
+	[Table("CardTransaction")]
 	public class Transaction : BaseEntity
 	{
 		public long CardId { get; set; }
