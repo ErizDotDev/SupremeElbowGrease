@@ -14,7 +14,7 @@ namespace QLess.Infrastructure.Data
 
 		public Card FindByCardNumber(string cardNumber)
 		{
-			string sql = "SELECT * FROM CardDetail WHERE CardNumber = @CardNumber";
+			string sql = "SELECT * FROM [CardDetail] WHERE [CardNumber] = @CardNumber";
 
 			dbConnection.Open();
 
