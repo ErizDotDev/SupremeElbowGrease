@@ -4,6 +4,6 @@ namespace QLess.Core.Interface
 {
 	public interface ITransactionRepository : IRepository<Transaction>
 	{
-		List<Transaction> GetTripTransactionsForGivenDate(DateTime targetDate);
+		List<Transaction> GetTripTransactionsForGivenDate(long cardId, DateTime targetDate);
 	}
 }
