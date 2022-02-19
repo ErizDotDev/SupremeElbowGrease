@@ -52,7 +52,7 @@ namespace QLess.Infrastructure.Services
 				return new CreateCardResponse
 				{
 					CardNumber = string.Empty,
-					ErrorMessage = "Failed to save transaction. Please try again."
+					ErrorMessage = "Failed to save transaction."
 				};
 			}
 
