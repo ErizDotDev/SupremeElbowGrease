@@ -122,7 +122,7 @@ namespace QLess.RepositoryTests
 
 			await _cardDetailRepository.CreateAsync(input);
 
-			var fetchObjectResult = await _cardDetailRepository.FindByIdAsync(2);
+			var fetchObjectResult = await _cardDetailRepository.FindByIdAsync(10);
 
 			Assert.Null(fetchObjectResult);
 		}
