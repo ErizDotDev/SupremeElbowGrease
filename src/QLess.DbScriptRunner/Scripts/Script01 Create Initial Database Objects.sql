@@ -1,10 +1,4 @@
-﻿--CREATE DATABASE [qless]
---GO
-
---USE [qless]
---GO
-
-CREATE TABLE [CardType]
+﻿CREATE TABLE [CardType]
 (
 	[Id] INT PRIMARY KEY,
 	[Description] NVARCHAR(50) NOT NULL
@@ -35,8 +29,8 @@ INSERT INTO [TransactionType] VALUES(3, 'Reload Card')
 
 CREATE TABLE [Transaction]
 (
-	[Id] BIGINT PRIMARY KEY IdENTITY,
-	[CardId] BIGINT FOREIGN KEY REFERENCES [cards]([Id]),
+	[Id] BIGINT PRIMARY KEY IDENTITY,
+	[CardId] BIGINT FOREIGN KEY REFERENCES [Card]([Id]),
 	[TransactionDate] DATETIME NOT NULL,
 	[TransactionTypeId] INT FOREIGN KEY REFERENCES [TransactionType]([Id]),
 	[TransactionAmount] DECIMAL NOT NULL,
