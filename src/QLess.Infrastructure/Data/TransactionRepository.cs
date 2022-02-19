@@ -13,10 +13,11 @@ namespace QLess.Infrastructure.Data
 		{
 		}
 
-		public List<Transaction> GetTripTransactionsForGivenDate(DateTime targetDate)
+		public List<Transaction> GetTripTransactionsForGivenDate(long cardId, DateTime targetDate)
 		{
-			string sql = "SELECT * FROM [Transaction] WHERE [TransactionTypeId] = @TransactionTypeId " +
-				"AND [TransactionDate] >= @StartDate AND [TransactionDate] <= @EndDate";
+			string sql = "SELECT * FROM [CardTransaction] WHERE [TransactionTypeId] = @TransactionTypeId " +
+				"AND [TransactionDate] >= @StartDate AND [TransactionDate] <= @EndDate AND" +
+				"[CardId] = @CardId";
 
 			dbConnection.Open();
 
@@ -26,6 +27,7 @@ namespace QLess.Infrastructure.Data
 				sqlParams.Add("@TransactionTypeId", TransactionType.PayTrip.Id);
 				sqlParams.Add("@StartDate", targetDate.GetDayStartDateTime());
 				sqlParams.Add("@EndDate", targetDate.GetDayEndDateTime());
+				sqlParams.Add("@CardId", cardId);
 
 				return dbConnection.Query<Transaction>(sql, sqlParams).ToList();
 			}
