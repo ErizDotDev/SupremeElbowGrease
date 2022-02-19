@@ -46,7 +46,7 @@ namespace QLess.Infrastructure.Services
 			decimal tripFare = cardTransactionProcessor.Invoke().GetTripFare(currentDateTripTransactions);
 			decimal newCardBalance = cardDetail.Balance - tripFare;
 
-			if (newCardBalance <= 0)
+			if (cardDetail.Balance < tripFare)
 			{
 				return new ServiceResponse
 				{
