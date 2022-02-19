@@ -45,5 +45,20 @@ namespace QLess.Infrastructure.Services
 
 			return await _transactionRepository.CreateAsync(paymentTransaction);
 		}
+
+		public async Task<bool> SaveLoadCardTransaction(Card cardDetail, LoadPaymentDetail computedPaymentValues)
+		{
+			var loadTransaction = new Transaction
+			{
+				CardId = cardDetail.Id,
+				TransactionDate = DateTime.Now,
+				TransactionTypeId = TransactionType.ReloadCard.Id,
+				TransactionAmount = computedPaymentValues.LoadAmount,
+				PreviousBalance = cardDetail.Balance,
+				NewBalance = computedPaymentValues.CardBalance
+			};
+
+			return await _transactionRepository.CreateAsync(loadTransaction);
+		}
 	}
 }
