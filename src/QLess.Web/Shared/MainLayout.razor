@@ -3,6 +3,8 @@
 <MudLayout>
     <MudAppBar>
         <MudText Typo="Typo.h5" Class="ml-3">QLess</MudText>
+        <MudSpacer/>
+        <MudText Typo="Typo.h6">Transaction Date: @DateTime.Now.ToString("MMMM dd, yyyy")</MudText>
     </MudAppBar>
     <MudMainContent>
         @Body
