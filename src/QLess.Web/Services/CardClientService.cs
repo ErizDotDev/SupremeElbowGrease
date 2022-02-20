@@ -40,5 +40,18 @@ namespace QLess.Web.Services
 			else
 				throw new Exception("Failed to get API response");
 		}
+
+		public async Task<CardLoadResponse> LoadCard(CardLoadRequest cardLoadRequest)
+		{
+			var response = await _client.PostAsJsonAsync<CardLoadRequest>("api/card/load", cardLoadRequest);
+
+			if (response.IsSuccessStatusCode)
+			{
+				var result = await response.Content.ReadFromJsonAsync<CardLoadResponse>();
+				return result;
+			}
+			else
+				throw new Exception("Failed to get API response");
+		}
 	}
 }

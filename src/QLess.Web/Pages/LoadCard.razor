@@ -1,0 +1,45 @@
+﻿@page "/load-card"
+
+<PageTitle>QLess | Load Card</PageTitle>
+
+<Page>
+    <div class="pa-4" style="height: 800px">
+        <MudText Typo="Typo.h3" Align="Align.Center">LOAD CARD</MudText>
+
+        @if (_showAlert)
+        {
+            <MudAlert Severity="Severity.Error" Variant="Variant.Filled" Class="my-2">@_message</MudAlert>
+        }
+
+        <div class="d-flex justify-center mt-15">
+            <EditForm Model="_model" OnSubmit="SubmitForm" style="width: 500px;">
+                <MudTextField @bind-Value="_model.CardNumber" Label="Card Number" Class="mt-10" Variant="Variant.Outlined" />
+                <MudTextField @bind-Value="_model.LoadAmount" Label="Load Amount" Class="mt-10" Variant="Variant.Outlined" />
+                <MudTextField @bind-Value="_model.AmountPaid" Label="Amount Paid" Class="mt-10" Variant="Variant.Outlined" />
+
+                <div class="d-flex justify-center align-content-between mt-15">
+                    <MudButton Color="Color.Primary" Variant="Variant.Filled" ButtonType="ButtonType.Submit" Disabled="_isBusy"
+                               Class="mx-3" Size="Size.Large">Submit</MudButton>
+                    <MudButton Color="Color.Secondary" Variant="Variant.Filled" ButtonType="ButtonType.Button" Disabled="_isBusy"
+                               Class="mx-3" Size="Size.Large" OnClick="GoToMainMenu">Go Back to Menu</MudButton>
+                </div>
+            </EditForm>
+        </div>
+
+        @if (_showReceipt)
+        {
+            <div class="mt-10">
+                <MudCard Elevation="0" Class="green lighten-5 pa-3">
+                    <MudCardContent>
+                        <MudText Align="Align.Center">Card successfully loaded!</MudText>
+                        <MudText Align="Align.Center">Your updated card balance is</MudText>
+                        <MudText Typo="Typo.h3" Align="Align.Center" Class="my-3">P@(_apiResponse.PaymentDetail.CardBalance.ToString("0.00"))</MudText>
+                        <MudText Typo="Typo.subtitle1" Align="Align.Center" Class="mt-3">Your change is: P@(_apiResponse.PaymentDetail.Change.ToString("0.00"))</MudText>
+                    </MudCardContent>
+                </MudCard>
+            </div>
+        }
+    </div>
+</Page>
+
+

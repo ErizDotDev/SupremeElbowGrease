@@ -7,5 +7,6 @@ namespace QLess.Web.Interfaces
 	{
 		Task<CreateCardResponse> CreateCard(CreateCardRequest createCardRequest);
 		Task<TripPaymentResponse> PayTrip(string cardNumber);
+		Task<CardLoadResponse> LoadCard(CardLoadRequest cardLoadRequest);
 	}
 }
