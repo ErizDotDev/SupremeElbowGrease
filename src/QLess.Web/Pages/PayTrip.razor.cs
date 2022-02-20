@@ -25,6 +25,7 @@ namespace QLess.Web.Pages
             _showAlert = false;
             _showReceipt = false;
             _apiResponse = await CardClientService.PayTrip(_cardNumber);
+            
             if (_apiResponse.Succeeded)
             {
                 _showReceipt = true;

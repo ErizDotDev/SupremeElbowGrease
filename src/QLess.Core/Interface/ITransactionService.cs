@@ -8,5 +8,6 @@ namespace QLess.Core.Interface
 		Task<bool> SaveTripPaymentTransaction(Card cardDetail, decimal fare);
 		Task<List<Transaction>> GetTripTransactionsFromGivenDate(long cardId, DateTime givenDate);
 		Task<bool> SaveLoadCardTransaction(Card cardDetail, LoadPaymentDetail computedPaymentValues);
+		Task<List<Transaction>> GetCardTransactions(string cardNumber);
 	}
 }

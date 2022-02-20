@@ -1,5 +1,4 @@
 ﻿using QLess.Core.Domain;
-using QLess.Core.Enums;
 using QLess.Web.Interfaces;
 using QLess.Web.Models;
 using System.Net.Http.Json;
@@ -52,6 +51,19 @@ namespace QLess.Web.Services
 			}
 			else
 				throw new Exception("Failed to get API response");
+		}
+
+		public async Task<List<Transaction>> GetCardTransactionHistory(string cardNumber)
+		{
+			var response = await _client.PostAsJsonAsync<string>("api/transaction/history", cardNumber);
+
+			if (response.IsSuccessStatusCode)
+			{
+				var result = await response.Content.ReadFromJsonAsync<List<Transaction>>();
+				return result;
+			}
+			else
+				throw new Exception("Failed to get API response.");
 		}
 	}
 }

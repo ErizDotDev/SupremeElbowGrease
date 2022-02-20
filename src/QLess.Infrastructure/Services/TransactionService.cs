@@ -16,6 +16,9 @@ namespace QLess.Infrastructure.Services
 		public async Task<List<Transaction>> GetTripTransactionsFromGivenDate(long cardId, DateTime givenDate)
 			=> await Task.FromResult(_transactionRepository.GetTripTransactionsForGivenDate(cardId, givenDate));
 
+		public async Task<List<Transaction>> GetCardTransactions(string cardNumber)
+			=> await Task.FromResult(_transactionRepository.GetCardTransactions(cardNumber));
+
 		public async Task<bool> SaveCreateCardTransaction(Card cardDetail)
 		{
 			var newTransaction = new Transaction

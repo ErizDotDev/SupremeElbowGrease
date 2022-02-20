@@ -1,0 +1,56 @@
+﻿@page "/transaction-history"
+
+<PageTitle>QLess | Transaction History</PageTitle>
+
+<Page>
+    <div class="pa-4" style="height: 800px;">
+        <MudText Typo="Typo.h3" Align="Align.Center">TRANSACTION HISTORY</MudText>
+
+        @if (_showAlert)
+        {
+            <MudAlert Severity="Severity.Error" Variant="Variant.Filled" Class="my-2">
+                Transaction history is unavailable for the provided card number.
+            </MudAlert>
+        }
+
+        <div class="d-flex justify-center mt-15">
+            <div style="width: 500px;">
+                <MudTextField @bind-Value="_cardNumber" Label="Card Number" Class="mt-10" Variant="Variant.Outlined" />
+
+                <div class="d-flex justify-center align-content-between mt-15">
+                    <MudButton Color="Color.Primary" Variant="Variant.Filled" ButtonType="ButtonType.Submit" Disabled="_isBusy"
+                               Class="mx-3" Size="Size.Large" OnClick="Submit">Submit</MudButton>
+                    <MudButton Color="Color.Secondary" Variant="Variant.Filled" ButtonType="ButtonType.Button" Disabled="_isBusy"
+                               Class="mx-3" Size="Size.Large" OnClick="GoToMainMenu">Go Back to Menu</MudButton>
+                </div>
+            </div>
+        </div>
+
+        @if (_showDataTable)
+        {
+            <div class="mt-5">
+                <MudTable Items="@_transactions" Bordered="true">
+                    <HeaderContent>
+                        <MudTh>Transaction Date</MudTh>
+                        <MudTh>Transaction Type</MudTh>
+                        <MudTh>Transaction Amount</MudTh>
+                        <MudTh>Previous Balance</MudTh>
+                        <MudTh>New Balance</MudTh>
+                    </HeaderContent>
+                    <RowTemplate>
+                         <MudTd DataLabel="Transaction Date">@context.TransactionDate.ToString("MM/dd/yyyy")</MudTd>
+                         <MudTd DataLabel="Transaction Type">@GetTransactionTypeText(context.TransactionTypeId)</MudTd>
+                         <MudTd DataLabel="Transaction Amount">P @context.TransactionAmount.ToString("0.00")</MudTd>
+                         <MudTd DataLabel="Previous Balance">P @context.PreviousBalance.ToString("0.00")</MudTd>
+                         <MudTd DataLabel="New Balance">P @context.NewBalance.ToString("0.00")</MudTd>
+                    </RowTemplate>
+                    <PagerContent>
+                        <MudTablePager />
+                    </PagerContent>
+                </MudTable>
+            </div>
+        }
+    </div>
+</Page>
+
+

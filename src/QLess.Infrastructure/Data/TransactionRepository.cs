@@ -36,5 +36,28 @@ namespace QLess.Infrastructure.Data
 				dbConnection.Close();
 			}
 		}
+
+		public List<Transaction> GetCardTransactions(string cardNumber)
+		{
+			string sql = "SELECT " +
+				"T.* " +
+				"FROM[CardTransaction] T " +
+				"INNER JOIN[CardDetail] C ON C.[Id] = T.[CardId] " +
+				"WHERE C.[CardNumber] = @CardNumber";
+
+			dbConnection.Open();
+
+			try
+			{
+				var sqlParams = new DynamicParameters();
+				sqlParams.Add("@CardNumber", cardNumber);
+
+				return dbConnection.Query<Transaction>(sql, sqlParams).ToList();
+			}
+			finally
+			{
+				dbConnection.Close();
+			}
+		}
 	}
 }
