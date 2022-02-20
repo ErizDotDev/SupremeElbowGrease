@@ -1,8 +1,5 @@
 ﻿@page "/create-card"
 
-@inject NavigationManager Navigation
-@inject ICardClientService CardClientService
-
 <PageTitle>QLess | Create Card</PageTitle>
 
 <Page>
@@ -50,38 +47,3 @@
         }
     </div>
 </Page>
-
-@code {
-    private CreateCardRequest _model = new();
-    private CreateCardResponse _apiResponse = new();
-    private bool _isBusy = false;
-    private bool _showAlert = false;
-    private bool _showCardNumber = false;
-    private string _message = string.Empty;
-
-    private async Task SubmitForm()
-    {
-        _isBusy = true;
-        _showAlert = false;
-        _showCardNumber = false;
-
-        _apiResponse = await CardClientService.CreateCard(_model);
-
-        if (string.IsNullOrEmpty(_apiResponse.CardNumber))
-        {
-            _showAlert = true;
-            _message = _apiResponse.ErrorMessage;
-        }
-        else
-        {
-            _showCardNumber = true;
-        }
-
-        _isBusy = false;
-    }
-
-    private void GoToMainMenu()
-    {
-        Navigation.NavigateTo("/");
-    }
-}
