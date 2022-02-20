@@ -1,0 +1,87 @@
+﻿@page "/create-card"
+
+@inject NavigationManager Navigation
+@inject ICardClientService CardClientService
+
+<PageTitle>QLess | Create Card</PageTitle>
+
+<Page>
+    <div class="pa-4" style="height: 800px">
+        <MudText Typo="Typo.h3" Align="Align.Center">CREATE CARD</MudText>
+
+        @if (_showAlert)
+        {
+            <MudAlert Severity="Severity.Error" Variant="Variant.Filled" Class="my-2">@_message</MudAlert>
+        }
+
+        <div class="d-flex justify-center mt-15">
+            <EditForm Model="_model" OnSubmit="SubmitForm" style="width: 500px;">
+                <MudSelect @bind-Value="_model.CardTypeEnum" T="CardType" Label="Card Type" AnchorOrigin="Origin.BottomCenter" Variant="Variant.Outlined">
+                    <MudSelectItem Value="CardType.Regular"></MudSelectItem>
+                    <MudSelectItem Value="CardType.Discounted"></MudSelectItem>
+                </MudSelect>
+
+                @if (_model.CardTypeEnum == CardType.Discounted)
+                {
+                    <MudTextField @bind-Value="_model.SpecialIDNumber" Label="ID Number" MaxLength="12" Class="mt-10" Variant="Variant.Outlined" />
+                }
+
+                <MudTextField @bind-Value="_model.InitialLoadAmount" Label="Initial Load Amount" Class="mt-10" Variant="Variant.Outlined" />
+
+                <div class="d-flex justify-center align-content-between mt-15">
+                    <MudButton Color="Color.Primary" Variant="Variant.Filled" ButtonType="ButtonType.Submit" Disabled="_isBusy"
+                               Class="mx-3" Size="Size.Large">Submit</MudButton>
+                    <MudButton Color="Color.Secondary" Variant="Variant.Filled" ButtonType="ButtonType.Button" Disabled="_isBusy"
+                               Class="mx-3" Size="Size.Large" OnClick="GoToMainMenu">Go Back to Menu</MudButton>
+                </div>
+            </EditForm>
+        </div>
+
+        @if (_showCardNumber)
+        {
+            <div class="mt-10">
+                <MudCard Elevation="0">
+                    <MudCardContent>
+                        <MudText Align="Align.Center">Your card number is</MudText>
+                        <MudText Typo="Typo.h3" Align="Align.Center" Class="my-3">@_apiResponse.CardNumber</MudText>
+                    </MudCardContent>
+                </MudCard>
+            </div>
+        }
+    </div>
+</Page>
+
+@code {
+    private CreateCardRequest _model = new();
+    private CreateCardResponse _apiResponse = new();
+    private bool _isBusy = false;
+    private bool _showAlert = false;
+    private bool _showCardNumber = false;
+    private string _message = string.Empty;
+
+    private async Task SubmitForm()
+    {
+        _isBusy = true;
+        _showAlert = false;
+        _showCardNumber = false;
+
+        _apiResponse = await CardClientService.CreateCard(_model);
+
+        if (string.IsNullOrEmpty(_apiResponse.CardNumber))
+        {
+            _showAlert = true;
+            _message = _apiResponse.ErrorMessage;
+        }
+        else
+        {
+            _showCardNumber = true;
+        }
+
+        _isBusy = false;
+    }
+
+    private void GoToMainMenu()
+    {
+        Navigation.NavigateTo("/");
+    }
+}

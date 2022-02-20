@@ -1,9 +1,50 @@
 ﻿@page "/"
 
-<PageTitle>Index</PageTitle>
+<PageTitle>QLess</PageTitle>
 
-<h1>Hello, world!</h1>
-
-Welcome to your new app.
-
-<SurveyPrompt Title="How is Blazor working for you?" />
+<Page>
+    <div class="d-flex align-center pa-4" style="height: 800px">
+        <MudGrid Spacing="5">
+            <MudItem xs="12" sm="6">
+                <MudLink Href="/create-card" Underline="Underline.None" Class="qless-menu-item">
+                    <MudCard>
+                        <MudCardMedia Image="img/credit_card.svg" Height="150" />
+                        <MudCardContent>
+                            <MudText Typo="Typo.h5" Align="Align.Center">CREATE CARD</MudText>                                                                                                
+                        </MudCardContent>
+                    </MudCard>
+                </MudLink>
+            </MudItem>
+            <MudItem xs="12" sm="6">
+                <MudLink Href="/create-card" Underline="Underline.None" Class="qless-menu-item">
+                    <MudCard>
+                        <MudCardMedia Image="img/payments.svg" Height="150" />
+                        <MudCardContent>
+                            <MudText Typo="Typo.h5" Align="Align.Center">LOAD CARD</MudText>                                                                                                
+                        </MudCardContent>
+                    </MudCard>
+                </MudLink>
+            </MudItem>
+            <MudItem xs="12" sm="6">
+                <MudLink Href="/create-card" Underline="Underline.None" Class="qless-menu-item">
+                    <MudCard>
+                        <MudCardMedia Image="img/plain_credit_card.svg" Height="150" />
+                        <MudCardContent>
+                            <MudText Typo="Typo.h5" Align="Align.Center">PAY TRIP</MudText>                                                                                                
+                        </MudCardContent>
+                    </MudCard>
+                </MudLink>
+            </MudItem>
+            <MudItem xs="12" sm="6">
+                <MudLink Href="/create-card" Underline="Underline.None" Class="qless-menu-item">
+                    <MudCard>
+                        <MudCardMedia Image="img/credit_card.svg" Height="150" />
+                        <MudCardContent>
+                            <MudText Typo="Typo.h5" Align="Align.Center">TRANSACTION HISTORY</MudText>                                                                                                
+                        </MudCardContent>
+                    </MudCard>
+                </MudLink>
+            </MudItem>
+        </MudGrid>
+    </div>
+</Page>
