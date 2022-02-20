@@ -5,5 +5,7 @@
 		public int CardType { get; set; }
 
 		public decimal InitialLoadAmount { get; set; }
+
+		public string SpecialIDNumber { get; set; } = string.Empty;
 	}
 }
