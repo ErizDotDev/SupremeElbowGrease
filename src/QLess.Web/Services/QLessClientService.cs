@@ -6,11 +6,11 @@ using System.Net.Http.Json;
 
 namespace QLess.Web.Services
 {
-	public class CardClientService : IQLessClientService
+	public class QLessClientService : IQLessClientService
 	{
 		private readonly HttpClient _client;
 
-		public CardClientService(HttpClient client)
+		public QLessClientService(HttpClient client)
 		{
 			_client = client;
 		}
