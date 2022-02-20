@@ -62,6 +62,8 @@ namespace QLess.Infrastructure.Services
 		public async Task<bool> SaveNewCardBalance(Card cardDetail, decimal newCardBalance)
 		{
 			cardDetail.Balance = newCardBalance;
+			cardDetail.DateLastUsed = DateTime.Now;
+
 			return await _cardRepository.UpdateAsync(cardDetail);
 		}
 
