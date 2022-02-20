@@ -38,7 +38,7 @@ namespace QLess.Infrastructure.Services
 				return new CardLoadResponse
 				{ 
 					Succeeded = false,
-					Message = $"Minimum initial load balance not reached. Please load your card with at least P{MinimumLoadTransactionAmount}.00"
+					Message = $"Minimum load balance not reached. Please load your card with at least P{MinimumLoadTransactionAmount}.00"
 				};
 			}
 
