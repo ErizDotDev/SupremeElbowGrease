@@ -19,7 +19,7 @@ CREATE TABLE [CardDetail]
 	[CardTypeId] INT FOREIGN KEY REFERENCES [CardType]([Id]),
 	[CardNumber] NVARCHAR(15) NOT NULL,
 	[SpecialIdNumber] NVARCHAR(12) NULL,
-	[Balance] DECIMAL NOT NULL,
+	[Balance] DECIMAL(5,2) NOT NULL,
 	[DateLastUsed] DATETIME NULL
 )
 
@@ -39,7 +39,7 @@ CREATE TABLE [CardTransaction]
 	[CardId] BIGINT FOREIGN KEY REFERENCES [CardDetail]([Id]),
 	[TransactionDate] DATETIME NOT NULL,
 	[TransactionTypeId] INT FOREIGN KEY REFERENCES [TransactionType]([Id]),
-	[TransactionAmount] DECIMAL NOT NULL,
-	[PreviousBalance] DECIMAL NOT NULL,
-	[NewBalance] DECIMAL NOT NULL
+	[TransactionAmount] DECIMAL(5,2) NOT NULL,
+	[PreviousBalance] DECIMAL(5,2) NOT NULL,
+	[NewBalance] DECIMAL(5,2) NOT NULL
 )
