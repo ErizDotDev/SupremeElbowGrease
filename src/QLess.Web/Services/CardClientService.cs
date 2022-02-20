@@ -27,5 +27,18 @@ namespace QLess.Web.Services
 			else
 				throw new Exception("Failed to get API response");
 		}
+
+		public async Task<TripPaymentResponse> PayTrip(string cardNumber)
+		{
+			var response = await _client.PostAsJsonAsync<string>("api/trip/pay", cardNumber);
+
+			if (response.IsSuccessStatusCode)
+			{
+				var result = await response.Content.ReadFromJsonAsync<TripPaymentResponse>();
+				return result;
+			}
+			else
+				throw new Exception("Failed to get API response");
+		}
 	}
 }

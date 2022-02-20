@@ -1,0 +1,83 @@
+﻿@page "/pay-trip"
+
+<PageTitle>QLess | Create Card</PageTitle>
+
+<Page>
+    <div class="pa-4" style="height: 800px">
+        <MudText Typo="Typo.h3" Align="Align.Center">PAY TRIP</MudText>
+
+        @if (_showAlert)
+        {
+            <MudAlert Severity="Severity.Error" Variant="Variant.Filled" Class="my-2">@_message</MudAlert>
+        }
+
+
+        <div class="d-flex justify-center mt-15">
+            <div style="width: 500px;">
+                <MudTextField @bind-Value="_cardNumber" Label="Card Number" Class="mt-10" Variant="Variant.Outlined" />
+
+                <div class="d-flex justify-center align-content-between mt-15">
+                    <MudButton Color="Color.Primary" Variant="Variant.Filled" ButtonType="ButtonType.Submit" Disabled="_isBusy"
+                               Class="mx-3" Size="Size.Large" OnClick="Submit">Submit</MudButton>
+                    <MudButton Color="Color.Secondary" Variant="Variant.Filled" ButtonType="ButtonType.Button" Disabled="_isBusy"
+                               Class="mx-3" Size="Size.Large" OnClick="GoToMainMenu">Go Back to Menu</MudButton>
+                </div>
+            </div>
+        </div>
+
+        @if (_showReceipt)
+        {
+            <div class="mt-10">
+                <MudCard Elevation="0" Class="green lighten-5 pa-3">
+                    <MudCardContent>
+                        <MudText Align="Align.Center">Payment successfully received!</MudText>
+                        <MudText Align="Align.Center">Your updated card balance is</MudText>
+                        <MudText Typo="Typo.h3" Align="Align.Center" Class="my-3">P@(_apiResponse.TransactionDetail.NewCardBalance.ToString("0.00"))</MudText>
+                        <MudText Typo="Typo.subtitle1" Align="Align.Center" Class="mt-3">Fare: P@(_apiResponse.TransactionDetail.Fare.ToString("0.00"))</MudText>
+                        <MudText Typo="Typo.subtitle1" Align="Align.Center">Previous card balance: P@(_apiResponse.TransactionDetail.PreviousCardBalance.ToString("0.00"))</MudText>
+                    </MudCardContent>
+                </MudCard>
+            </div>
+        }
+    </div>
+</Page>
+
+@code {
+    [Inject]
+    public NavigationManager Navigation { get; set; }
+
+    [Inject]
+    public ICardClientService CardClientService { get; set; }
+
+    private TripPaymentResponse _apiResponse = new();
+    private string _cardNumber = string.Empty;
+    private string _message = string.Empty;
+    private bool _isBusy = false;
+    private bool _showAlert = false;
+    private bool _showReceipt = false;
+
+    private async Task Submit()
+    {
+        _isBusy = true;
+        _showAlert = false;
+        _showReceipt = false;
+        _apiResponse = await CardClientService.PayTrip(_cardNumber);
+
+        if (_apiResponse.Succeeded)
+        {
+            _showReceipt = true;   
+        }
+        else
+        {
+            _showAlert = true;
+            _message = _apiResponse.Message;
+        }
+
+        _isBusy = false;
+    }
+
+    private void GoToMainMenu()
+    {
+        Navigation.NavigateTo("/");
+    }
+}
