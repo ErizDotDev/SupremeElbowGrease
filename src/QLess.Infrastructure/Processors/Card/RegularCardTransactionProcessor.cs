@@ -1,9 +1,12 @@
 ﻿using QLess.Core.Domain;
+using QLess.Core.Helpers;
 
 namespace QLess.Infrastructure.Processors
 {
 	public class RegularCardTransactionProcessor : BaseCardTransactionProcessor
 	{
+		private const int YearsBeforeExpiry = 5;
+
 		public override CreateCardResponse TryCreateCardNumber(decimal initialLoadAmount, string specialIdNumber = "")
 		{
 			const decimal minimumRegularCardTypeLoad = 100;
@@ -32,5 +35,8 @@ namespace QLess.Infrastructure.Processors
 		}
 
 		public override decimal GetTripFare(List<Transaction> currentDateTripTransactions) => 15m;
+
+		public override bool IsCardExpired(DateTime dateLastUsed, DateTime dateUsed)
+			=> dateLastUsed.GetDayStartDateTime().AddYears(YearsBeforeExpiry) < dateUsed;
 	}
 }

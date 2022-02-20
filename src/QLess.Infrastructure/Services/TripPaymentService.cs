@@ -42,6 +42,16 @@ namespace QLess.Infrastructure.Services
 
 			var cardTransactionProcessor = cardTransactionProcessorList[(CardType)cardDetail.CardTypeId];
 
+			bool isCardExpired = cardTransactionProcessor.Invoke().IsCardExpired(cardDetail.DateLastUsed.Value, DateTime.Now);
+			if (isCardExpired)
+			{
+				return new TripPaymentResponse
+				{
+					Succeeded = false,
+					Message = "Card is already expired. Please create another card."
+				};
+			}
+
 			var currentDateTripTransactions = await _transactionService.GetTripTransactionsFromGivenDate(cardDetail.Id, DateTime.Now);
 			decimal tripFare = cardTransactionProcessor.Invoke().GetTripFare(currentDateTripTransactions);
 			decimal newCardBalance = cardDetail.Balance - tripFare;

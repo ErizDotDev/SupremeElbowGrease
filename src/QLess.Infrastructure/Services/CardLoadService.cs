@@ -1,5 +1,7 @@
 ﻿using QLess.Core.Domain;
+using QLess.Core.Enums;
 using QLess.Core.Interface;
+using QLess.Infrastructure.Processors;
 
 namespace QLess.Infrastructure.Services
 {
@@ -11,11 +13,13 @@ namespace QLess.Infrastructure.Services
 		
 		private readonly ICardService _cardService;
 		private readonly ITransactionService _transactionService;
+		private Dictionary<CardType, Func<BaseCardTransactionProcessor>> cardTransactionProcessorList;
 
 		public CardLoadService(ICardService cardService, ITransactionService transactionService)
 		{
 			_cardService = cardService;
 			_transactionService = transactionService;
+			cardTransactionProcessorList = BaseCardTransactionProcessor.GetAvailableTransactionProcessors();
 		}
 
 		public async Task<CardLoadResponse> LoadCard(string cardNumber, decimal loadAmount, decimal amountPaid)
@@ -54,6 +58,18 @@ namespace QLess.Infrastructure.Services
 				{
 					Succeeded = false,
 					Message = "Card number is not found."
+				};
+			}
+
+			var cardTransactionProcessor = cardTransactionProcessorList[(CardType)cardDetail.CardTypeId];
+			
+			bool isCardExpired = cardTransactionProcessor.Invoke().IsCardExpired(cardDetail.DateLastUsed.Value, DateTime.Now);
+			if (isCardExpired)
+			{
+				return new CardLoadResponse
+				{
+					Succeeded = false,
+					Message = "Card is already expired. Please create another card."
 				};
 			}
 

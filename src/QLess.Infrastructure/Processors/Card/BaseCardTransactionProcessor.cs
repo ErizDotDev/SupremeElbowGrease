@@ -19,6 +19,8 @@ namespace QLess.Infrastructure.Processors
 
 		public virtual decimal GetTripFare(List<Transaction> currentDateTripTransactions) => 0m;
 
+		public virtual bool IsCardExpired(DateTime dateLastUsed, DateTime dateUsed) => false;
+
 		internal string GenerateCardNumber()
 			=> DateTime.Now.ToString("yyddMMhhmmss");
 	}
