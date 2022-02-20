@@ -54,7 +54,7 @@ namespace QLess.Infrastructure.Services
 				TransactionDate = DateTime.Now,
 				TransactionTypeId = TransactionType.ReloadCard.Id,
 				TransactionAmount = computedPaymentValues.LoadAmount,
-				PreviousBalance = cardDetail.Balance,
+				PreviousBalance = cardDetail.Balance - computedPaymentValues.LoadAmount,
 				NewBalance = computedPaymentValues.CardBalance
 			};
 
