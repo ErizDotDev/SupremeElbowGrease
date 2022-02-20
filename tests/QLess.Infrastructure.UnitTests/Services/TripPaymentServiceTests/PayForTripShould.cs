@@ -33,8 +33,8 @@ namespace QLess.Infrastructure.UnitTests.Services.TripPaymentServiceTests
 			var result = await _tripPaymentService.PayForTrip(cardNumber);
 
 			Assert.False(result.Succeeded);
-			Assert.True(!string.IsNullOrEmpty(result.ErrorMessage));
-			Assert.Equal(expectedMessage, result.ErrorMessage);
+			Assert.True(!string.IsNullOrEmpty(result.Message));
+			Assert.Equal(expectedMessage, result.Message);
 		}
 
 		[Fact]
@@ -56,8 +56,8 @@ namespace QLess.Infrastructure.UnitTests.Services.TripPaymentServiceTests
 			var result = await _tripPaymentService.PayForTrip(cardNumber);
 
 			Assert.False(result.Succeeded);
-			Assert.True(!string.IsNullOrEmpty(result.ErrorMessage));
-			Assert.Equal(expectedMessage, result.ErrorMessage);
+			Assert.True(!string.IsNullOrEmpty(result.Message));
+			Assert.Equal(expectedMessage, result.Message);
 		}
 
 		[Fact]
@@ -85,8 +85,8 @@ namespace QLess.Infrastructure.UnitTests.Services.TripPaymentServiceTests
 			var result = await _tripPaymentService.PayForTrip(cardNumber);
 
 			Assert.False(result.Succeeded);
-			Assert.True(!string.IsNullOrEmpty(result.ErrorMessage));
-			Assert.Equal(expectedMessage, result.ErrorMessage);
+			Assert.True(!string.IsNullOrEmpty(result.Message));
+			Assert.Equal(expectedMessage, result.Message);
 		}
 
 		[Fact]
@@ -115,8 +115,8 @@ namespace QLess.Infrastructure.UnitTests.Services.TripPaymentServiceTests
 			var result = await _tripPaymentService.PayForTrip(cardNumber);
 
 			Assert.False(result.Succeeded);
-			Assert.True(!string.IsNullOrEmpty(result.ErrorMessage));
-			Assert.Equal(expectedMessage, result.ErrorMessage);
+			Assert.True(!string.IsNullOrEmpty(result.Message));
+			Assert.Equal(expectedMessage, result.Message);
 		}
 
 		[Fact]
@@ -146,8 +146,8 @@ namespace QLess.Infrastructure.UnitTests.Services.TripPaymentServiceTests
 			var result = await _tripPaymentService.PayForTrip(cardNumber);
 
 			Assert.False(result.Succeeded);
-			Assert.True(!string.IsNullOrEmpty(result.ErrorMessage));
-			Assert.Equal(expectedMessage, result.ErrorMessage);
+			Assert.True(!string.IsNullOrEmpty(result.Message));
+			Assert.Equal(expectedMessage, result.Message);
 		}
 
 		[Fact]
@@ -175,7 +175,7 @@ namespace QLess.Infrastructure.UnitTests.Services.TripPaymentServiceTests
 			var result = await _tripPaymentService.PayForTrip(cardNumber);
 
 			Assert.True(result.Succeeded);
-			Assert.False(!string.IsNullOrEmpty(result.ErrorMessage));
+			Assert.False(!string.IsNullOrEmpty(result.Message));
 		}
 	}
 }

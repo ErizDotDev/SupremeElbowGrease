@@ -1,9 +1,9 @@
-﻿using QLess.Core.Services;
+﻿using QLess.Core.Domain;
 
 namespace QLess.Core.Interface
 {
 	public interface ITripPaymentService
 	{
-		Task<ServiceResponse> PayForTrip(string cardNumber);
+		Task<TripPaymentResponse> PayForTrip(string cardNumber);
 	}
 }

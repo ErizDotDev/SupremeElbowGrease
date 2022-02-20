@@ -1,6 +1,6 @@
-﻿using QLess.Core.Enums;
+﻿using QLess.Core.Domain;
+using QLess.Core.Enums;
 using QLess.Core.Interface;
-using QLess.Core.Services;
 using QLess.Infrastructure.Processors;
 
 namespace QLess.Infrastructure.Services
@@ -18,25 +18,25 @@ namespace QLess.Infrastructure.Services
 			cardTransactionProcessorList = BaseCardTransactionProcessor.GetAvailableTransactionProcessors();
 		}
 
-		public async Task<ServiceResponse> PayForTrip(string cardNumber)
+		public async Task<TripPaymentResponse> PayForTrip(string cardNumber)
 		{
 			var cardDetail = await _cardService.FindCardDetailsByCardNumber(cardNumber);
 
 			if (cardDetail == null)
 			{
-				return new ServiceResponse
+				return new TripPaymentResponse
 				{ 
 					Succeeded = false,
-					ErrorMessage = "Card number is not found."
+					Message = "Card number is not found."
 				};
 			}
 
 			if (cardDetail.Balance <= 0)
 			{
-				return new ServiceResponse
+				return new TripPaymentResponse
 				{
 					Succeeded = false,
-					ErrorMessage = "Insufficient load balance. Please reload your card."
+					Message = "Insufficient load balance. Please reload your card."
 				};
 			}			
 
@@ -48,34 +48,44 @@ namespace QLess.Infrastructure.Services
 
 			if (cardDetail.Balance < tripFare)
 			{
-				return new ServiceResponse
+				return new TripPaymentResponse
 				{
 					Succeeded = false,
-					ErrorMessage = "Insufficient load balance. Please reload your card."
+					Message = "Insufficient load balance. Please reload your card."
 				};
 			}
+
+			var transactionDetail = new TripPaymentDetail
+			{ 
+				Fare = tripFare,
+				PreviousCardBalance = cardDetail.Balance
+			};
 
 			bool isSaveCardBalanceSuccess = await _cardService.SaveNewCardBalance(cardDetail, newCardBalance);
 			if (!isSaveCardBalanceSuccess)
 			{
-				return new ServiceResponse
+				return new TripPaymentResponse
 				{
 					Succeeded = false,
-					ErrorMessage = "Failed to save new card balance. Please try again."
+					Message = "Failed to save new card balance. Please try again."
 				};
 			}
 
 			bool isSavePaymentTransactionSuccess = await _transactionService.SaveTripPaymentTransaction(cardDetail, tripFare);
 			if (!isSavePaymentTransactionSuccess)
 			{
-				return new ServiceResponse
+				return new TripPaymentResponse
 				{
 					Succeeded = false,
-					ErrorMessage = "Failed to save payment transaction."
+					Message = "Failed to save payment transaction."
 				};
 			}			
 
-			return new ServiceResponse { Succeeded = true };
+			return new TripPaymentResponse 
+			{ 
+				Succeeded = true,
+				TransactionDetail = transactionDetail
+			};
 		}
 	}
 }

@@ -1,9 +1,9 @@
-﻿namespace QLess.Core.Services
+﻿namespace QLess.Core.Domain
 {
 	public class ServiceResponse
 	{
 		public bool Succeeded { get; set; } = false;
 
-		public string ErrorMessage { get; set; } = string.Empty;
+		public string Message { get; set; } = string.Empty;
 	}
 }
