@@ -39,8 +39,8 @@ namespace QLess.Infrastructure.Services
 				TransactionDate = DateTime.Now,
 				TransactionTypeId = TransactionType.PayTrip.Id,
 				TransactionAmount = fare,
-				PreviousBalance = cardDetail.Balance,
-				NewBalance = cardDetail.Balance - fare
+				PreviousBalance = cardDetail.Balance + fare,
+				NewBalance = cardDetail.Balance
 			};
 
 			return await _transactionRepository.CreateAsync(paymentTransaction);
