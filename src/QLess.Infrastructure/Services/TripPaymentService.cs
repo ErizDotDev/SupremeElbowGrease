@@ -42,6 +42,9 @@ namespace QLess.Infrastructure.Services
 
 			var cardTransactionProcessor = cardTransactionProcessorList[(CardType)cardDetail.CardTypeId];
 
+			if (cardDetail.DateLastUsed == null)
+				cardDetail.DateLastUsed = DateTime.Now;
+
 			bool isCardExpired = cardTransactionProcessor.Invoke().IsCardExpired(cardDetail.DateLastUsed.Value, DateTime.Now);
 			if (isCardExpired)
 			{
