@@ -6,7 +6,7 @@ using System.Net.Http.Json;
 
 namespace QLess.Web.Services
 {
-	public class CardClientService : ICardClientService
+	public class CardClientService : IQLessClientService
 	{
 		private readonly HttpClient _client;
 

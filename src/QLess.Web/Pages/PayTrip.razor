@@ -47,7 +47,7 @@
     public NavigationManager Navigation { get; set; }
 
     [Inject]
-    public ICardClientService CardClientService { get; set; }
+    public IQLessClientService CardClientService { get; set; }
 
     private TripPaymentResponse _apiResponse = new();
     private string _cardNumber = string.Empty;

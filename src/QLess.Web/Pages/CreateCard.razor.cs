@@ -24,7 +24,7 @@ namespace QLess.Web.Pages
         public NavigationManager Navigation { get; set; }
 
         [Inject]
-        public ICardClientService CardClientService { get; set; }
+        public IQLessClientService CardClientService { get; set; }
 
         private CreateCardRequest _model = new();
         private CreateCardResponse _apiResponse = new();

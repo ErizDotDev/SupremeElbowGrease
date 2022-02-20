@@ -3,7 +3,7 @@ using QLess.Web.Models;
 
 namespace QLess.Web.Interfaces
 {
-	public interface ICardClientService
+	public interface IQLessClientService
 	{
 		Task<CreateCardResponse> CreateCard(CreateCardRequest createCardRequest);
 		Task<TripPaymentResponse> PayTrip(string cardNumber);

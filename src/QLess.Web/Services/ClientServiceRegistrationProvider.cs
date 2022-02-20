@@ -7,7 +7,7 @@ namespace QLess.Web.Services
 	{
 		public static IServiceCollection AddClientServices(this IServiceCollection services)
 		{
-			return services.AddScoped<ICardClientService, CardClientService>();
+			return services.AddScoped<IQLessClientService, CardClientService>();
 		}
 	}
 }
